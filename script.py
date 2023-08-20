@@ -1,6 +1,6 @@
 import os
 import requests
-import sys
+import argparse
 from dotenv import load_dotenv
 from urllib.parse import urlsplit
 
@@ -41,7 +41,10 @@ def is_bitlink(link, token):
 if __name__ == '__main__':
     load_dotenv('data.env')
     token = os.environ['BITLY_TOKEN']
-    url = sys.argv[1]
+    parser = argparse.ArgumentParser(description='enter your url http://...')
+    parser.add_argument('url', metavar='url', type=str, help='enter your url: ')
+    args = parser.parse_args()
+    url = args.url
     try:
         if is_bitlink(url, token):
             total_clicks = count_clicks(token, url)
