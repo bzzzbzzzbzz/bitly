@@ -42,15 +42,14 @@ if __name__ == '__main__':
     load_dotenv('data.env')
     token = os.environ['BITLY_TOKEN']
     parser = argparse.ArgumentParser(description='enter your url http://...')
-    parser.add_argument('url', metavar='url', type=str, help='enter your url: ')
+    parser.add_argument('url', metavar='url', help='enter your url: ')
     args = parser.parse_args()
-    url = args.url
     try:
-        if is_bitlink(url, token):
-            total_clicks = count_clicks(token, url)
+        if is_bitlink(args.url, token):
+            total_clicks = count_clicks(token, args.url)
             print('Total clicks: ', total_clicks)
         else:
-            short_link = shorten_link(token, url)
+            short_link = shorten_link(token, args.url)
             print('Your link: ', short_link)
     except requests.exceptions.HTTPError as e:
         print('HTTP Error: ', e)
